@@ -185,7 +185,7 @@ public:
         consensus.nMinimumChainWork = uint256S("0x00");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x23f72e760542bf021ec76d04231ad7cf80142069a79ba702028e074b726f86ef"); // Block 4,255,555
+        consensus.defaultAssumeValid = uint256S("0x6495a84f8f83981a435a6cbf9e6dd4bf0f38618c8325213ca6ef6add40c0ddd8"); // Block 6,000,000
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -209,9 +209,10 @@ public:
         vSeeds.emplace_back("seed2.digibyte.io");
         vSeeds.emplace_back("seed3.digibyte.io");
         vSeeds.emplace_back("seed.digibyte.io");
-        vSeeds.emplace_back("seed.digibyteprojects.com");
         vSeeds.emplace_back("digihash.co");
         vSeeds.emplace_back("digiexplorer.info");
+        vSeeds.emplace_back("seed.digibyteprojects.com");
+
 
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,30);
@@ -251,16 +252,20 @@ public:
             { 1380000, uint256S("0x00000000000001969b1e5836dd8bf6a001d96f4a16d336e09405b62b29feead6")},
             { 1435000, uint256S("0xf78cc9c2791c8a23720e2efcdaf46584046ee5db8f050e21a3a15a13f5c68da0")},
             { 4255555, uint256S("0x23f72e760542bf021ec76d04231ad7cf80142069a79ba702028e074b726f86ef")},
+            { 6000000, uint256S("0x6495a84f8f83981a435a6cbf9e6dd4bf0f38618c8325213ca6ef6add40c0ddd8")},
          }
         };
 
         chainTxData = ChainTxData{
-            // Data as of block 00000000000000000166d612d5595e2b1cd88d71d695fc580af64d8da8658c23 (height 446482).
+            // Data as of block 6495a84f8f83981a435a6cbf9e6dd4bf0f38618c8325213ca6ef6add40c0ddd8 (height 6,000,000).
             1416891634, // * UNIX timestamp of last known number of transactions
             1046018,  // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the SetBestChain debug.log lines)
             0.1         // * estimated number of transactions per second after that timestamp
         };
+
+        /* disable fallback fee on mainnet */
+        m_fallback_fee_enabled = false;
     }
 };
 
@@ -295,12 +300,12 @@ public:
         consensus.nTargetTimespan =  0.10 * 24 * 60 * 60; // 2.4 hours
         consensus.nTargetSpacing = 60; // 60 seconds
         consensus.nInterval = consensus.nTargetTimespan / consensus.nTargetSpacing;
-        consensus.nDiffChangeTarget = 67200; // DigiShield Hard Fork Block BIP34Height 67,200
+        consensus.nDiffChangeTarget = 67; // DigiShield Hard Fork Block BIP34Height 67,200
 
         // Old 1% monthly DGB Reward before 15 secon block change
-        consensus.patchBlockRewardDuration = 10080; //10080; - No longer used
+        consensus.patchBlockRewardDuration = 10; //10080; - No longer used
         //4 blocks per min, x60 minutes x 24hours x 14 days = 80,160 blocks for 0.5% reduction in DGB reward supply - No longer used
-        consensus.patchBlockRewardDuration2 = 80160; //80160;
+        consensus.patchBlockRewardDuration2 = 80; //80160;
         consensus.nTargetTimespanRe = 1*60; // 60 Seconds
         consensus.nTargetSpacingRe = 1*60; // 60 seconds
         consensus.nIntervalRe = consensus.nTargetTimespanRe / consensus.nTargetSpacingRe; // 1 block
@@ -330,11 +335,11 @@ public:
 
 
         // DigiByte Hard Fork Block Heights
-        consensus.multiAlgoDiffChangeTarget = 145000; // Block 145,000 MultiAlgo Hard Fork
-        consensus.alwaysUpdateDiffChangeTarget = 400000; // Block 400,000 MultiShield Hard Fork
-        consensus.workComputationChangeTarget = 1430000; // Block 1,430,000 DigiSpeed Hard Fork
+        consensus.multiAlgoDiffChangeTarget = 145; // Block 145,000 MultiAlgo Hard Fork
+        consensus.alwaysUpdateDiffChangeTarget = 400; // Block 400,000 MultiShield Hard Fork
+        consensus.workComputationChangeTarget = 1430; // Block 1,430,000 DigiSpeed Hard Fork
 
-        consensus.fPowAllowMinDifficultyBlocks = false;
+        consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 28224; // 28224 - 70% of 40320
         consensus.nMinerConfirmationWindow = 40320; // nPowTargetTimespan / nPowTargetSpacing 40320 main net - 1 week
@@ -359,10 +364,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_NVERSIONBIPS].nStartTime = 1489997089; // March 24th, 2017 149
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000001f057509eba81aed91");
+        consensus.nMinimumChainWork = uint256S("0x00");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x308ea0711d5763be2995670dd9ca9872753561285a84da1d58be58acaa822252"); //1079274
+        consensus.defaultAssumeValid = uint256S("0x00"); //1079274
 
         pchMessageStart[0] = 0xfd;
         pchMessageStart[1] = 0xc8;
@@ -379,6 +384,9 @@ public:
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
+        vSeeds.emplace_back("seed1.digibyte.io");
+        vSeeds.emplace_back("seed2.digibyte.io");
+        vSeeds.emplace_back("seed3.digibyte.io");
         vSeeds.emplace_back("testnet-seed.digibyteprojects.com");
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,126);
@@ -387,7 +395,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
 
-        bech32_hrp = "tb";
+        bech32_hrp = "dgbt";
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
@@ -398,7 +406,7 @@ public:
 
         checkpointData = {
             {
-                {546, uint256S("000000002a936ca763904c3c35fce2f3556c559c0214345d31b1bcebf76acb70")},
+                {     0, uint256S("0x308ea0711d5763be2995670dd9ca9872753561285a84da1d58be58acaa822252")},
             }
         };
 
@@ -409,6 +417,8 @@ public:
             0.09
         };
 
+        /* enable fallback fee on testnet */
+        m_fallback_fee_enabled = true;
     }
 };
 
@@ -419,18 +429,52 @@ class CRegTestParams : public CChainParams {
 public:
     CRegTestParams() {
         strNetworkID = "regtest";
-        consensus.nSubsidyHalvingInterval = 150;
-        //consensus.BIP34Height = 100000000; // BIP34 has not activated on regtest (far in the future so block v1 are not rejected in tests)
-        //consensus.BIP34Hash = uint256();
-        //consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in rpc activation tests)
-        //consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in rpc activation tests)
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // two weeks
-        consensus.nPowTargetSpacing = 10 * 60;
         consensus.fPowAllowMinDifficultyBlocks = true;
-        consensus.fPowNoRetargeting = true;
-        consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
-        consensus.nMinerConfirmationWindow = 144; // Faster than normal for regtest (144 instead of 2016)
+        consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // two weeks
+        consensus.nPowTargetSpacing = 60 / 4;
+        consensus.nTargetTimespan =  0.10 * 24 * 60 * 60; // 2.4 hours
+        consensus.nTargetSpacing = 60; // 60 seconds
+        consensus.nInterval = consensus.nTargetTimespan / consensus.nTargetSpacing;
+        consensus.nDiffChangeTarget = 67; // DigiShield Hard Fork Block BIP34Height 67,200
+
+        // Old 1% monthly DGB Reward before 15 secon block change
+        consensus.patchBlockRewardDuration = 10; //10080; - No longer used
+        //4 blocks per min, x60 minutes x 24hours x 14 days = 80,160 blocks for 0.5% reduction in DGB reward supply - No longer used
+        consensus.patchBlockRewardDuration2 = 80; //80;
+        consensus.nTargetTimespanRe = 1*60; // 60 Seconds
+        consensus.nTargetSpacingRe = 1*60; // 60 seconds
+        consensus.nIntervalRe = consensus.nTargetTimespanRe / consensus.nTargetSpacingRe; // 1 block
+
+        consensus.nAveragingInterval = 10; // 10 blocks
+        consensus.multiAlgoTargetSpacing = 30*5; // NUM_ALGOS * 30 seconds
+        consensus.multiAlgoTargetSpacingV4 = 15*5; // NUM_ALGOS * 15 seconds
+        consensus.nAveragingTargetTimespan = consensus.nAveragingInterval * consensus.multiAlgoTargetSpacing; // 10* NUM_ALGOS * 30
+        consensus.nAveragingTargetTimespanV4 = consensus.nAveragingInterval * consensus.multiAlgoTargetSpacingV4; // 10 * NUM_ALGOS * 15
+
+        consensus.nMaxAdjustDown = 40; // 40% adjustment down
+        consensus.nMaxAdjustUp = 20; // 20% adjustment up
+        consensus.nMaxAdjustDownV3 = 16; // 16% adjustment down
+        consensus.nMaxAdjustUpV3 = 8; // 8% adjustment up
+        consensus.nMaxAdjustDownV4 = 16;
+        consensus.nMaxAdjustUpV4 = 8;
+
+        consensus.nMinActualTimespan = consensus.nAveragingTargetTimespan * (100 - consensus.nMaxAdjustUp) / 100;
+        consensus.nMaxActualTimespan = consensus.nAveragingTargetTimespan * (100 + consensus.nMaxAdjustDown) / 100;
+        consensus.nMinActualTimespanV3 = consensus.nAveragingTargetTimespan * (100 - consensus.nMaxAdjustUpV3) / 100;
+        consensus.nMaxActualTimespanV3 = consensus.nAveragingTargetTimespan * (100 + consensus.nMaxAdjustDownV3) / 100;
+        consensus.nMinActualTimespanV4 = consensus.nAveragingTargetTimespanV4 * (100 - consensus.nMaxAdjustUpV4) / 100;
+        consensus.nMaxActualTimespanV4 = consensus.nAveragingTargetTimespanV4 * (100 + consensus.nMaxAdjustDownV4) / 100;
+
+        consensus.nLocalTargetAdjustment = 4; //target adjustment per algo
+        consensus.nLocalDifficultyAdjustment = 4; //difficulty adjustment per algo
+
+
+        // DigiByte Hard Fork Block Heights
+        consensus.multiAlgoDiffChangeTarget = 145; // Block 145,000 MultiAlgo Hard Fork
+        consensus.alwaysUpdateDiffChangeTarget = 400; // Block 400,000 MultiShield Hard Fork
+        consensus.workComputationChangeTarget = 1430; // Block 1,430,000 DigiSpeed Hard Fork
+
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 0;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
@@ -454,10 +498,10 @@ public:
         nDefaultPort = 18444;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1296688602, 2, 0x207fffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1519460922, 4, 0x207fffff, 1, 8000 * COIN);      
         consensus.hashGenesisBlock = genesis.GetHash();
-        //assert(consensus.hashGenesisBlock == uint256S("0x0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206"));
-        //assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        assert(consensus.hashGenesisBlock == uint256S("0x4598a0f2b823aaf9e77ee6d5e46f1edb824191dcd48b08437b7cec17e6ae6e26"));
+        assert(genesis.hashMerkleRoot == uint256S("0x72ddd9496b004221ed0557358846d9248ecd4c440ebd28ed901efc18757d0fad"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -468,7 +512,7 @@ public:
 
         checkpointData = {
             {
-                {0, uint256S("0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206")},
+                {0, uint256S("4598a0f2b823aaf9e77ee6d5e46f1edb824191dcd48b08437b7cec17e6ae6e26")},
             }
         };
 
@@ -478,13 +522,13 @@ public:
             0
         };
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
-        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,126);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,140);
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,254);
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
 
-        bech32_hrp = "bcrt";
+        bech32_hrp = "dgbrt";
     }
 };
 
